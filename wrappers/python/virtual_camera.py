@@ -9,8 +9,8 @@ pyautogui.FAILSAFE = False
 
 import pyfakewebcam
 
-threshold1 = 500
-threshold2 = 300
+threshold1 = 600
+# threshold2 = 300
 current_depth = 0
 
 range_x, range_y = 640, 480
@@ -30,7 +30,8 @@ def show_depth():
     global current_depth
 
     depth, timestamp = freenect.sync_get_depth()
-    depth = 255 * np.logical_and(depth >= current_depth - threshold1,
+    # print(depth.mean())
+    depth = 255 * ~np.logical_and(depth >= current_depth - threshold1,
                                  depth <= current_depth + threshold1)
     depth = depth.astype(np.uint8)
     cv2.imshow('Depth', depth)
